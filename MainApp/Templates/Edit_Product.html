@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% extends 'Admin_homepage.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AddProduct</title>
+</head>
+<body>
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Product Adding Page</h6>
+        <form method="post" action="{% url 'Update_product' dataid=data.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="floatingTextarea">Product Name</label>
+            <input type="text" class="form-control" id="text" placeholder="" style="height: 50px;" name="Product" value="{{data.P_name}}">
+        </div>
+        
+        <div class="form-group mb-3 ">
+            <label for="floatingTextarea">Categories</label>
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"  style="height: 60px;" name="category" >
+                {% for i in category_data %}
+                <option selected="" >{{i.c_name}}</option>
+                {% endfor %}
+             
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="file" class="form-label" >Image:</label>
+            <input type="file" class="form-control" id="file" name="p_image" value="{{data.p_image}}" src="{{data.p_image.url}}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="floatingInput">Price</label>
+            <input type="text" class="form-control" id="floatingInput" placeholder=""  style="height: 50px;" name="price" value="{{data.Price}}">
+           
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="floatingInput">Quantity</label>
+            <input type="text" class="form-control" id="floatingInput" placeholder="" style="height: 50px;" name="quantity" value="{{data.Quantity}}">
+           
+        </div>
+
+        <div class="form-group">
+            <label for="floatingTextarea" >Description</label>
+            <textarea class="form-control" placeholder="" id="floatingTextarea" style="height: 150px;" name="description" >{{data.Description}}</textarea>
+        
+        </div><br><br>
+        <button type="submit" class="btn btn-primary">Save</button>
+        
+    </div>
+</body>
+</html>
+{% endblock %}
