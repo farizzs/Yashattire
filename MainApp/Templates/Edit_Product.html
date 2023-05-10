@@ -27,6 +27,15 @@
              
             </select>
         </div>
+        <div class="form-group mb-3 ">
+            <label for="floatingTextarea">Sizes</label>
+            <select multiple class="SlectBox" id="size" aria-label="Floating label select example" style="height: 60px;" name="sizes">
+                {% for i in sizes %}
+                <option  value="{{i.0}}" >{{i.1}}</option>
+                {% endfor %}
+             
+            </select>
+        </div>
         <div class="mb-3">
             <label for="file" class="form-label" >Image:</label>
             <input type="file" class="form-control" id="file" name="p_image" value="{{data.p_image}}" src="{{data.p_image.url}}">

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from MainApp.models import CategoryDb,CarouserDb,Productdb
+from MainApp.models import CategoryDb,CarouserDb,Productdb,Options
 
 # Create your views here.
 def Home_page(request):
@@ -19,6 +19,10 @@ def Product_page(request,products):
 def Product_single_page(request,dataid):
     data=CategoryDb.objects.all()
     product=Productdb.objects.get(id=dataid)
-    return render(request, "product_single.html",{'data':data,'product':product})
+    options =Options.objects.filter(product=product)
+    print(options)
+    return render(request, "product_single.html",{'data':data,'product':product,'options':options})
+
+
     
 

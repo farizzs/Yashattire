@@ -4,6 +4,7 @@ from django.core.files.storage import FileSystemStorage
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
+from . models import PRODUCT_SIZES, Options
 
 
 # Create your views here
@@ -78,19 +79,26 @@ def admin_logout(request):
 
 def Add_Product(request):
     data=CategoryDb.objects.all()
-    return render(request,'Add_Product.html',{'data':data})
+    context={
+        "data":data,
+        "sizes":PRODUCT_SIZES
+    }
+    return render(request,'Add_Product.html',context)
 
 def save_Product(request):
      if request.method=="POST":
 
         pr_name = request.POST.get('Product')
         cat = request.POST.get('category')
+        sizes = request.POST.getlist('sizes')
         pr = request.POST.get('price')
         qu = request.POST.get('quantity')
         ds = request.POST.get('description')
         img = request.FILES['p_image']
         obj = Productdb(P_name=pr_name, Category=cat, Price=pr, Quantity=qu, Description=ds, p_image=img)
         obj.save()
+        for size in sizes:
+            Options.objects.create(product=obj, size=size)
         return redirect(Add_Product)
      
 def Display_product(request):
@@ -100,7 +108,8 @@ def Display_product(request):
 def Edit_product(request, dataid):
     data = Productdb.objects.get(id=dataid)
     category_data = CategoryDb.objects.all()
-    return render(request,"Edit_product.html", {'data':data,'category_data':category_data})
+    sizes=PRODUCT_SIZES
+    return render(request,"Edit_product.html", {'data':data,'category_data':category_data,'sizes':sizes})
 
 def Delete_product(request, dataid):
     data = Productdb.objects.filter(id=dataid)
@@ -111,6 +120,7 @@ def Update_product(req, dataid):
     if req.method=='POST':
         pd = req.POST.get('Product')
         ct = req.POST.get('category')
+        sizes = req.POST.getlist('sizes')
         pr = req.POST.get('price')
         qu = req.POST.get('quantity')
         ds = req.POST.get('description')
@@ -121,7 +131,17 @@ def Update_product(req, dataid):
 
         except MultiValueDictKeyError:
             file = Productdb.objects.get(id=dataid).image
-        Productdb.objects.filter(id=dataid).update(P_name=pd, Category=ct, Price=pr, Quantity=qu, Description=ds, p_image=file)
+        obj = Productdb.objects.get(id=dataid)
+        obj.P_name = pd
+        obj.Category = ct
+        obj.Price = pr
+        obj.Quantity = qu
+        obj.Description = ds
+        obj.p_image = file
+        obj.save()
+        Options.objects.filter(product=obj).delete()
+        for size in sizes:
+            Options.objects.create(product=obj, size=size)
         return redirect(Display_product)
     
 
