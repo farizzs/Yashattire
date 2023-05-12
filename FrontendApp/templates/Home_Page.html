@@ -245,7 +245,7 @@
                     <a href="{% url 'Product_page' products=i.c_name %}" class="cat-img position-relative overflow-hidden mb-3">
                         <img class="img-fluid" src="{{i.c_image.url}}" alt="" style="height: 400px;">
                     </a>
-                    <h5 class="font-weight-semi-bold m-0">{{i.c_name}}</h5>
+                    <a href="{% url 'Product_page' products=i.c_name %}"><h5 class="font-weight-semi-bold m-0">{{i.c_name}}</h5></a>
                 </div>
             </div>
             {% endfor %}
