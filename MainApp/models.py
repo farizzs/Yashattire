@@ -14,6 +14,7 @@ class CategoryDb(models.Model):
     Description=models.CharField(null=True, blank=True,max_length=200)
 
 class Productdb(models.Model):
+    Trending=models.BooleanField
     P_name = models.CharField(max_length=25, null=True, blank=True)
     Category = models.CharField(max_length=15, null=True, blank=True)
     p_image = models.ImageField(upload_to="p_image")
