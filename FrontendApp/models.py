@@ -10,6 +10,10 @@ class cartdb(models.Model):
     Total_price=models.FloatField(null=True,blank=True,max_length=10)
     Quantity = models.CharField(max_length=20, null=True, blank=True)
 
-
+class ContactDb(models.Model):
+    Name= models.CharField(null=True,blank=True,max_length=100)
+    Email= models.EmailField()
+    Subject=models.CharField(null=True,blank=True,max_length=100)
+    Message=models.CharField(null=True,blank=True, max_length=1000)
 
     

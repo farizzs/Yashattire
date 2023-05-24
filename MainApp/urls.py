@@ -24,5 +24,11 @@ urlpatterns = [
       path('Edit_Carousel/<int:dataid>/',views.Edit_Carousel,name="Edit_Carousel"),
       path('update_Carousel/<int:dataid>/',views.update_Carousel,name="update_Carousel"),
       path('delete_carousal/<int:dataid>/',views.delete_carousal,name="delete_carousal"),
+
+      path('Display_contact/',views.Display_contact,name="Display_contact"),
+      path('Delete_contact/<int:dataid>',views.Delete_contact,name="Delete_contact"),
+      path('Display_customers/',views.Display_customers,name="Display_customers"),
+      path('Delete_customers/<int:dataid>',views.Delete_customers,name="Delete_customers"),
+
 ]
 

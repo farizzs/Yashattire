@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends 'Admin_homepage.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="col-sm-12 col-xl-6" style="width: 100%;">
+        <div class="bg-light rounded h-100 p-4">
+            <h6 class="mb-4">Bordered Table</h6>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Subject</th>
+                        <th>message</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        
+                        <td>{{i.Name}}</td>
+                        <td>{{i.Email}}</td>
+                        <td>{{i.Subject}}</td>
+                        <td>{{i.Message}}</td>
+                   
+                    
+                
+                    <td>   
+                        <form action="{% url 'Delete_contact' dataid=i.id  %}">
+                            <button type="submit" class="btn btn-primary mr-2">Delete</button>
+                        </form>
+                        
+                    </td>
+             
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

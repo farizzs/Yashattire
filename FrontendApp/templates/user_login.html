@@ -15,11 +15,9 @@
 			{% csrf_token %}
 			<h1>Create Account</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+				<p>Enter your personal details and start journey with us</p>
 			</div>
-			<span>or use your email for registration</span>
+			
 			<input type="text" placeholder="Name"  name="username"/>
 			<input type="email" placeholder="Email" name="emailid" />
 			<input type="password" placeholder="Password" name="password" />
@@ -33,7 +31,7 @@
 			<h1>Sign in</h1>
 			<div class="social-container">
 		
-				<p>To keep connected with us please login with your personal info</p>
+				<p class="p1">To keep connected with us please login with your personal info</p>
 			</div>
 			<input type="text" placeholder="username" name="username" />
 			<input type="password" placeholder="password" name="password" />
@@ -86,6 +84,15 @@ body {
 	height: 100vh;
 	margin: -20px 0 50px;
 }
+.p1{
+	
+	font-size: 14px;
+	font-weight: 100;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	margin: 20px 0 30px;
+
+}
 
 h1 {
 	font-weight: bold;
@@ -98,6 +105,7 @@ h2 {
 
 p {
 	font-size: 14px;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	font-weight: 100;
 	line-height: 20px;
 	letter-spacing: 0.5px;

@@ -77,15 +77,31 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="{% url 'cart_page' %}" class="btn border">
+            <div></div>
+            <div class="col-lg-3 col-6 text-right d-flex ">
+                <a  href="{% if not request.user.is_authenticated %}/Userlogin{% else %}javaScript:void(0);{% endif %}"  class="btn border text-primary ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50"  height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16" >
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
+                      
+                    {% if request.user.username %}
+                    <a href=""><span  class="border-radius text-primary " >{{request.user.username}}</span></a>
+                    {% else %}
+                    <a href="{% url 'User_login' %}"><span  class="badge text-primay">Login</span></a></svg>
+                </a>{% endif %}
+
+                <a href="{% url 'cart_page' %}" class="btn border ml-2">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge text-primary">Cart</span>
                 </a>
+
+                {% if request.user.username %}
+                <a href="{% url 'logout' %}" class="btn border ml-2" >
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge text-primary">Logout</span>
+                </a>{% endif %}
+                
+             
             </div>
         </div>
     </div>
@@ -101,7 +117,7 @@
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 280px">
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i class="fa fa-angle-down float-right mt-1"></i></a>
                             <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
@@ -138,13 +154,20 @@
                                 </div>
                             </div>
                             <a href="{% url 'Contact_us' %}" class="nav-item nav-link">Contact</a>
+                            <a href="{% url 'cart_page' %}" class="nav-item nav-link">Cart</a>
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
-                        </div>
+                        
+
+                        <!-- <div class="navbar-nav ml-auto py-0">
+                            {% if request.user.username %}
+                            <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+                            {% endif %}
+                          
+                          
+                        </div> -->
                     </div>
                 </nav>
+                
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         

@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from MainApp.models import CategoryDb,Productdb,CarouserDb
+from FrontendApp.models import ContactDb
 from django.core.files.storage import FileSystemStorage
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.models import User
@@ -183,3 +184,26 @@ def update_Carousel(request, dataid):
         CarouserDb.objects.filter(id=dataid).update(caption=cap, cover_image=file)
         return redirect(DisplayCarousel)
     
+def Display_contact(request):
+    data=ContactDb.objects.all()
+    context={
+        'data':data
+    }
+    return render(request,"Display_contact_deatails.html",context)
+
+def Delete_contact(request,dataid):
+    data= ContactDb.objects.filter(id=dataid)
+    data.delete()
+    return redirect(Display_contact)
+
+def Display_customers(request):
+    data=User.objects.all()
+    context={
+        'data':data
+    }
+    return render(request, "Display_Customers.html",context)
+
+def Delete_customers(request,dataid):
+    data = User.objects.filter(id=dataid)
+    data.delete()
+    return redirect(Display_customers)
