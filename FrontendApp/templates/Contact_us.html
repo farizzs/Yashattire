@@ -62,7 +62,7 @@
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="" class="text-decoration-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">YASHATTIRE</span></h1>
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
@@ -77,21 +77,30 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
+            <div class="col-lg-3 col-6 text-right d-flex ">
+                <a  href="{% if not request.user.is_authenticated %}/Userlogin{% else %}javaScript:void(0);{% endif %}"  class="btn border text-primary ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50"  height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16" >
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                         <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1v-1c0-1-1-4-6-4s-6 3-6 4v1a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12z"/>
-                      </svg>
+                      
                     {% if request.user.username %}
-                    <a href=""><span  class="badge">{{request.user.username}}</span></a>
+                    <a href=""><span  class="border-radius text-primary " >{{request.user.username}}</span></a>
                     {% else %}
-                    <a href="{% url 'User_login' %}"><span  class="badge">Login</span></a>
+                    <a href="{% url 'User_login' %}"><span  class="badge text-primay">Login</span></a></svg>
                 </a>{% endif %}
-                <a href="{% url 'cart_page' %}" class="btn border">
+
+                <a href="{% url 'cart_page' %}" class="btn border ml-2">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge text-primary">Cart</span>
                 </a>
+
+                {% if request.user.username %}
+                <a href="{% url 'logout' %}" class="btn border ml-2" >
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge text-primary">Logout</span>
+                </a>{% endif %}
+                
+             
             </div>
         </div>
     </div>
@@ -134,21 +143,22 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{% url 'Home_page' %}" class="nav-item nav-link">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                           
+                            <a href="{% url 'All_Products' %}" class="nav-item nav-link">All Product</a>
+                            <!-- <div class="nav-item dropdown">
+                                <a href="{% url 'All_Products' %}" class="nav-item nav-link">All Product</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="cart.html" class="dropdown-item">Shopping Cart</a>
                                     <a href="checkout.html" class="dropdown-item">Checkout</a>
                                 </div>
-                            </div>
+                            </div> -->
                             <a href="{% url 'Contact_us' %}" class="nav-item nav-link active">Contact</a>
+                            <a href="{% url 'cart_page' %}" class="nav-item nav-link">Cart</a>
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
+                        <!-- <div class="navbar-nav ml-auto py-0">
                             <a href="" class="nav-item nav-link">Login</a>
                             <a href="" class="nav-item nav-link">Register</a>
-                        </div>
+                        </div> -->
                     </div>
                 </nav>
             </div>

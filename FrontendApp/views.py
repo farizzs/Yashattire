@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 def Home_page(request):
     c_data=CategoryDb.objects.all()
     cr_data=CarouserDb.objects.all()
-    return render(request,"Home_Page.html",{'c_data':c_data,'cr_data':cr_data})
+    trending_products=Productdb.objects.filter(Trending=True)
+    return render(request,"Home_Page.html",{'c_data':c_data,'cr_data':cr_data,"trending_products":trending_products})
 
 def Contact_us(request):
     data=CategoryDb.objects.all()
@@ -28,6 +29,8 @@ def Product_single_page(request,dataid):
 
     return render(request, "product_single.html",{'data':data,'product':product,'options':options})
 
+
+
 def cart_page(request):
     data=CategoryDb.objects.all()
     cart_data=cartdb.objects.filter(user=request.user)
@@ -41,7 +44,7 @@ def cart_page(request):
 def Save_to_cart(request):
     if request.method=="POST":
         product_id=request.POST.get('product')
-        product=product=Productdb.objects.get(id=product_id)
+        product=Productdb.objects.get(id=product_id)
         quantity = request.POST.get('Qty')
       
         total_price = request.POST.get('totalprice')
@@ -110,6 +113,15 @@ def Save_contact(request):
         contact_data=ContactDb(Name=name,Email=email,Subject=subject,Message=message)
         contact_data.save()
         return redirect(Contact_us)
+    
+def All_Products(request):
+    data=CategoryDb.objects.all()
+    product_data=Productdb.objects.all()
+    context={
+        'data':data,
+        'product_data':product_data
+    }
+    return render(request,"All_products.html",context)
 
 
 

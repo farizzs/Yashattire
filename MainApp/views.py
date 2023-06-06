@@ -96,7 +96,10 @@ def save_Product(request):
         qu = request.POST.get('quantity')
         ds = request.POST.get('description')
         img = request.FILES['p_image']
-        obj = Productdb(P_name=pr_name, Category=cat, Price=pr, Quantity=qu, Description=ds, p_image=img)
+        trendy = request.POST.get('trendy')
+        
+        obj = Productdb(P_name=pr_name, Category=cat, Price=pr, Quantity=qu, Description=ds, p_image=img, Trending=True if trendy=="yes" else False)
+        print("nooo",trendy)
         obj.save()
         for size in sizes:
             Options.objects.create(product=obj, size=size)
