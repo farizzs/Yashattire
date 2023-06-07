@@ -26,8 +26,10 @@ def Product_single_page(request,dataid):
     data=CategoryDb.objects.all()
     product=Productdb.objects.get(id=dataid)
     options =Options.objects.filter(product=product)
+    this_category=product.Category
+    this_category_products=Productdb.objects.filter(Category=this_category)
 
-    return render(request, "product_single.html",{'data':data,'product':product,'options':options})
+    return render(request, "product_single.html",{'data':data,'product':product,'options':options,'this_category_products':this_category_products})
 
 
 

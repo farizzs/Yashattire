@@ -128,6 +128,7 @@ def Update_product(req, dataid):
         pr = req.POST.get('price')
         qu = req.POST.get('quantity')
         ds = req.POST.get('description')
+        trendy = req.POST.get('trendy')
         try:
             img = req.FILES['p_image']
             fs = FileSystemStorage()
@@ -142,6 +143,7 @@ def Update_product(req, dataid):
         obj.Quantity = qu
         obj.Description = ds
         obj.p_image = file
+        obj.Trending=True if trendy=="yes" else False
         obj.save()
         Options.objects.filter(product=obj).delete()
         for size in sizes:
