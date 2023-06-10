@@ -4,13 +4,15 @@ from FrontendApp.models import cartdb,ContactDb
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 
 # Create your views here.
 def Home_page(request):
     c_data=CategoryDb.objects.all()
     cr_data=CarouserDb.objects.all()
     trending_products=Productdb.objects.filter(Trending=True)
-    return render(request,"Home_Page.html",{'c_data':c_data,'cr_data':cr_data,"trending_products":trending_products})
+    New_arrival=Productdb.objects.filter(New_Arival=True)
+    return render(request,"Home_Page.html",{'c_data':c_data,'cr_data':cr_data,"trending_products":trending_products,'New_arrival':New_arrival})
 
 def Contact_us(request):
     data=CategoryDb.objects.all()
@@ -28,6 +30,7 @@ def Product_single_page(request,dataid):
     options =Options.objects.filter(product=product)
     this_category=product.Category
     this_category_products=Productdb.objects.filter(Category=this_category)
+    
 
     return render(request, "product_single.html",{'data':data,'product':product,'options':options,'this_category_products':this_category_products})
 
@@ -36,9 +39,11 @@ def Product_single_page(request,dataid):
 def cart_page(request):
     data=CategoryDb.objects.all()
     cart_data=cartdb.objects.filter(user=request.user)
+    grant_total = cart_data.aggregate(Sum("Total_price"))["Total_price__sum"]
     context={
         'data':data,
-        "cart_data":cart_data
+        "cart_data":cart_data,
+        "grant_total":grant_total
     }
     return render(request, "cart_page.html",context)
 
@@ -124,6 +129,12 @@ def All_Products(request):
         'product_data':product_data
     }
     return render(request,"All_products.html",context)
+
+def Checkout(request,):
+    data=CategoryDb.objects.all()
+    cart_datas=cartdb.objects.filter(user=request.user)
+    grant_total = cart_datas.aggregate(Sum("Total_price"))["Total_price__sum"]
+    return render(request,"checkOutpage.html",{'data':data,'cart_datas':cart_datas,'grant_total':grant_total})
 
 
 

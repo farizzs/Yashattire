@@ -15,7 +15,8 @@ urlpatterns=[
     path('User_login_fn/',views.User_login_fn,name="User_login_fn"),
     path('logout',views.user_logout,name="logout"),
     path('Save_contact',views.Save_contact,name="Save_contact"),
-    path('All_Products/',views.All_Products,name='All_Products')
+    path('All_Products/',views.All_Products,name='All_Products'),
+    path('Checkout',views.Checkout,name="Checkout"),
 
 
 

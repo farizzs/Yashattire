@@ -97,9 +97,9 @@ def save_Product(request):
         ds = request.POST.get('description')
         img = request.FILES['p_image']
         trendy = request.POST.get('trendy')
+        new_arival=request.POST.get('New') 
+        obj = Productdb(P_name=pr_name, Category=cat, Price=pr, Quantity=qu, Description=ds, p_image=img, Trending=True if trendy=="yes" else False,New_Arival=True if new_arival=="yes" else False)
         
-        obj = Productdb(P_name=pr_name, Category=cat, Price=pr, Quantity=qu, Description=ds, p_image=img, Trending=True if trendy=="yes" else False)
-        print("nooo",trendy)
         obj.save()
         for size in sizes:
             Options.objects.create(product=obj, size=size)
@@ -129,6 +129,7 @@ def Update_product(req, dataid):
         qu = req.POST.get('quantity')
         ds = req.POST.get('description')
         trendy = req.POST.get('trendy')
+        new_arival=req.POST.get('New') 
         try:
             img = req.FILES['p_image']
             fs = FileSystemStorage()
@@ -144,6 +145,7 @@ def Update_product(req, dataid):
         obj.Description = ds
         obj.p_image = file
         obj.Trending=True if trendy=="yes" else False
+        obj.New_Arival=True if new_arival=="yes" else False
         obj.save()
         Options.objects.filter(product=obj).delete()
         for size in sizes:
