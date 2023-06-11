@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from MainApp.models import CategoryDb,CarouserDb,Productdb,Options
-from FrontendApp.models import cartdb,ContactDb
+from FrontendApp.models import cartdb,ContactDb,CheckOut
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
@@ -130,11 +130,30 @@ def All_Products(request):
     }
     return render(request,"All_products.html",context)
 
-def Checkout(request,):
+def Checkout(request):
     data=CategoryDb.objects.all()
     cart_datas=cartdb.objects.filter(user=request.user)
     grant_total = cart_datas.aggregate(Sum("Total_price"))["Total_price__sum"]
     return render(request,"checkOutpage.html",{'data':data,'cart_datas':cart_datas,'grant_total':grant_total})
+
+def Save_checkout(request):
+    if request.method=="POST":
+        name=request.POST.get('name')
+        email=request.POST.get('email')
+        mobile=request.POST.get('mobile')
+        address=request.POST.get('address')
+        city=request.POST.get('city')
+        pin=request.POST.get('pin_code')
+        productname=request.POST.get('Name_hidden')
+        totalprice=request.POST.get('Total_hidden')
+        obj = CheckOut(Name=name, Email=email, Mobile=mobile, Address=address, City=city,Pin_Code=pin,Product_name=productname,Total_price=totalprice,User_Name=request.user)
+        obj.save()
+        data=cartdb.objects.filter(user=request.user)
+        data.delete()
+        return redirect(Home_page)
+
+
+
 
 
 

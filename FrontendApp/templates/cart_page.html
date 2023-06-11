@@ -25,6 +25,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'frontend/css/style.css' %}" rel="stylesheet">
+   
 </head>
 
 <body>
@@ -182,7 +183,7 @@
     <!-- Page Header End -->
 
 
-    <!-- Cart Start -->
+    <!-- Cart Start --> {% if cart_data %}
     <div class="container-fluid pt-5 myclass" >
         <div class="row px-xl-5 ">
             <div class="col-lg-8 table-responsive mb-5">
@@ -209,15 +210,15 @@
                             </td>
                             <td class="align-middle">{{i.Total_price}}</td>
                             <td class="align-middle">
-                                <form action="{% url 'cart_delete' dataid=i.id  %}">
-
-                                <button class="btn btn-sm btn-primary" onclick="removing()"><i class="fa fa-times"></i></button></td>
-                            </form>
+                                <form action="{% url 'cart_delete' dataid=i.id  %}" id="form_{{i.id}}">
+                            
+                            <button class="btn btn-sm btn-primary" ><i class="fa fa-times"></i></button></td>
                         </tr>
-                      
+                    </form>
                     </tbody>{% endfor %}
                 </table>
             </div>
+            
             <div class="col-lg-4">
                 <!-- <form class="mb-5" action="">
                     <div class="input-group">
@@ -227,6 +228,7 @@
                         </div>
                     </div>
                 </form> -->
+               
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
                         <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
@@ -238,7 +240,9 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
+                          
                             <h6 class="font-weight-medium">10</h6>
+
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
@@ -251,7 +255,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>{% else %}
+    <div style="position: static; padding-left: 40px; padding-top: 0px;"><img src="{% static 'frontend/empty_cart3.png' %}" alt="#000000" height="700px" width="1400px"></div>
+    {% endif %}
     <!-- Cart End -->
 
 
@@ -348,29 +354,51 @@
             content: counter(Serial);
         }
 
+        
+
+    </style>
+    <style>
+        .cart_empty{
+            background-image: url("C:\Self_Project\MainProject\FrontendApp\static\cart_empty.png");
+        }
     </style>
 
-    <script>
-        function removing(){
-            var x=confirm("are you sure");
-                if(x==true) {
-                    alert("Deleted")
-                    
-                }
-                else{
-                    alert("cancel")
-                }
-            }
-        
-    </script>
+    
 
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+     <!-- <script>
+          $(document).on("click",".remove_btn", function(e){
+            e.preventDefault()
+            var id = $(this).attr("data-id")
+            var form_id = `#form_${id}`
+            Swal.fire({
+              title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $(form_id).submit()
+  }
+})
+            
+          })
+  
+         
+      </script> -->
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'frontend/lib/easing/easing.min.js' %}"></script>
     <script src="{% static 'frontend/lib/owlcarousel/owl.carousel.min.js' %}"></script>

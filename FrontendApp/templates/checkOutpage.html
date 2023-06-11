@@ -173,7 +173,7 @@
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">Checkout</h1>
             <div class="d-inline-flex">
-                <p class="m-0"><a href="">Home</a></p>
+                <p class="m-0"><a href="{% url 'Home_page' %}">Home</a></p>
                 <p class="m-0 px-2">-</p>
                 <p class="m-0">Checkout</p>
             </div>
@@ -184,12 +184,16 @@
 
     <!-- Checkout Start -->
     <div class="container-fluid pt-1">
+        <form action="{% url 'Save_checkout' %}" method="post">
+            {% csrf_token %}
         <div class="row px-xl-5">
             <div class="col-lg-8">
                 <div class="mb-4">
+                    
                     <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                     <div class="row mt-1">
                         <div class="col-md-6 form-group">
+                            
                             <label>First Name</label>
                             <input class="form-control" type="text" placeholder="" name="name" id="name"
                             required="required" >
@@ -222,7 +226,7 @@
                         </div> -->
                         <div class="col-md-6 form-group">
                             <label>City</label>
-                            <input class="form-control" type="text" placeholder="">
+                            <input class="form-control" type="text" placeholder="" name="city">
                         </div>
                         <!-- <div class="col-md-6 form-group">
                             <label>State</label>
@@ -230,8 +234,14 @@
                         </div> -->
                         <div class="col-md-6 form-group">
                             <label>PIN Code</label>
-                            <input class="form-control" type="text" placeholder="">
+                            <input class="form-control" type="text" placeholder="" name="pin_code">
                         </div>
+                        {% for i in cart_datas %}
+                        <input type="hidden" name="Name_hidden" id="Total_price" value="{{i.P_name}}" style="margin-top: 0cm;">
+                        {% endfor %}
+                        <input type="hidden" name="Total_hidden" id="Total_price" value="{{grant_total|add:10}}" style="margin-top: 0cm;">
+
+
                         <!-- <div class="col-md-12 form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="newaccount">
@@ -244,6 +254,7 @@
                                 <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
                             </div>
                         </div> -->
+                        
                     </div>
                 </div>
                 <!-- <div class="collapse mb-4" id="shipping-address">
@@ -309,6 +320,9 @@
                         <div class="d-flex justify-content-between">
                             <p>{{i.P_name}}</p>
                             <p>{{i.Total_price}}</p>
+                            <!-- <input type="hidden" name="Name_hidden" id="Total_price" value="{{i.P_name}}" style="margin-top: 0cm;"> -->
+
+                           
                            
                         </div> {% endfor %}
                        
@@ -325,7 +339,7 @@
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">Rs:{{grant_total|add:10}}</h5>
+                            <h5 class="font-weight-bold" >Rs:{{grant_total|add:10}}</h5>
                         </div>
                     </div>
                 </div>
@@ -354,12 +368,14 @@
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
-                        <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
-                    </div>
+                        <form action="{% url 'Save_checkout'  %}">
+                        <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" >Place Order</button>
+                    </div></form>
                 </div>
            
         </div>
-    </div>
+    </div></form>
+
     <!-- Checkout End -->
 
 
@@ -368,38 +384,53 @@
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <a href="" class="text-decoration-none">
-                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">YASHATTIRE</span></h1>
                 </a>
-                <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+                <!-- <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p> -->
+                <h5 class="font-weight-bold text-dark mb-4">Contact Info</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Nilambur Road, Malappuram, Kerala</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>support@yashattire.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+91 9747128120</p>
+                <p class="mb-0" ><svg  style="color: rgb(175, 85, 85);" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                  </svg>&nbsp;  yashattire.in</p>
             </div>
-            <div class="col-lg-8 col-md-12">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <!-- <a href="" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
+                </a> -->
+                <!-- <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p> -->
+                <h5 class="font-weight-bold text-dark mb-4">About Us</h5>
+                <p class="mb-2">This journey with YASHATTIRE started with a humble beginning, birthed out of passion to make sure that attire and fashion is reachable to every person.</p>
+                <p>YASHATTIRE has been providing clean, safe and eco-friendly wear in India since 2020 with only the purest quality, sustainable materials.</p>
+                
+                
+            </div>
+            <!-- <div class="col-lg-8 col-md-12">
                 <div class="row">
                     <div class="col-md-4 mb-5">
                         <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="{% url 'Home_page' %}"><i class="fa fa-angle-right mr-2"></i>Home</a>
                             <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                             <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
                             <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
                             <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            <a class="text-dark" href="{% url 'Contact_us' %}"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-4 mb-5">
                         <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-dark mb-2" href="{% url 'Home_page' %}"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="{% url 'All_Products' %}"><i class="fa fa-angle-right mr-2"></i>All Products</a>
+                            <a class="text-dark mb-2" href="{% url 'Contact_us' %}"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                            <a class="text-dark mb-2" href="{% url 'cart_page' %}"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
                             <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+
                         </div>
                     </div>
-                    <div class="col-md-4 mb-5">
+                    <!-- <div class="col-md-4 mb-5 " >
                         <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
                         <form action="">
                             <div class="form-group">
@@ -413,17 +444,14 @@
                                 <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
         <div class="row border-top border-light mx-xl-5 py-4">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
-                    by
-                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a><br>
-                    Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Yashattire</a>. All Rights Reserved.
                 </p>
             </div>
             <div class="col-md-6 px-xl-0 text-center text-md-right">

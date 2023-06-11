@@ -17,6 +17,7 @@ urlpatterns=[
     path('Save_contact',views.Save_contact,name="Save_contact"),
     path('All_Products/',views.All_Products,name='All_Products'),
     path('Checkout',views.Checkout,name="Checkout"),
+    path('Save_checkout/',views.Save_checkout,name="Save_checkout")
 
 
 

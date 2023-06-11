@@ -16,4 +16,19 @@ class ContactDb(models.Model):
     Subject=models.CharField(null=True,blank=True,max_length=100)
     Message=models.CharField(null=True,blank=True, max_length=1000)
 
+class CheckOut(models.Model):
+    User_Name=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    Name= models.CharField(null=True,blank=True,max_length=100)
+    Email=models.EmailField()
+    Mobile=models.IntegerField()
+    Address=models.CharField(null=True,blank=True,max_length=100)
+    City=models.CharField(max_length=100)
+    Pin_Code=models.IntegerField()
+    Product_name=models.CharField(max_length=100)
+    Total_price=models.IntegerField()
+
+    
+
+
+
     
