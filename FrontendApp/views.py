@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from MainApp.models import CategoryDb,CarouserDb,Productdb,Options
-from FrontendApp.models import cartdb,ContactDb,CheckOut
+from FrontendApp.models import cartdb,ContactDb,CheckOut, Order
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
@@ -25,14 +25,15 @@ def Product_page(request,products):
     return render(request,"product_page.html",{'data':data,'product_data':product_data})
 
 def Product_single_page(request,dataid):
+    already="False"
     data=CategoryDb.objects.all()
     product=Productdb.objects.get(id=dataid)
     options =Options.objects.filter(product=product)
     this_category=product.Category
     this_category_products=Productdb.objects.filter(Category=this_category)
-    
-
-    return render(request, "product_single.html",{'data':data,'product':product,'options':options,'this_category_products':this_category_products})
+    if cartdb.objects.filter(P_name=product.P_name, user=request.user).exists():
+        already="True"
+    return render(request, "product_single.html",{'data':data,'product':product,'options':options,'this_category_products':this_category_products,'already':already})
 
 
 
@@ -53,7 +54,6 @@ def Save_to_cart(request):
         product_id=request.POST.get('product')
         product=Productdb.objects.get(id=product_id)
         quantity = request.POST.get('Qty')
-      
         total_price = request.POST.get('totalprice')
         obj = cartdb(P_name=product.P_name, Price=product.Price, Quantity=quantity, Total_price=total_price, P_image=product.p_image,user=request.user)
         obj.save()
@@ -144,13 +144,36 @@ def Save_checkout(request):
         address=request.POST.get('address')
         city=request.POST.get('city')
         pin=request.POST.get('pin_code')
-        productname=request.POST.get('Name_hidden')
-        totalprice=request.POST.get('Total_hidden')
-        obj = CheckOut(Name=name, Email=email, Mobile=mobile, Address=address, City=city,Pin_Code=pin,Product_name=productname,Total_price=totalprice,User_Name=request.user)
-        obj.save()
+        order = Order.objects.create(
+            user=request.user
+        )
         data=cartdb.objects.filter(user=request.user)
+        creation_data = [
+                CheckOut(
+                    order=order,
+                    Name=name,
+                    Email=email,
+                    Mobile=mobile,
+                    Address=address,
+                    City=city,
+                    Pin_Code=pin,
+                    Product_name=cart_item.P_name,
+                    Quantity=cart_item.Quantity,
+                    Total_price=cart_item.Total_price,
+                )
+                for cart_item in data
+
+            ]
+        print(creation_data)
+        CheckOut.objects.bulk_create(creation_data)  
         data.delete()
         return redirect(Home_page)
+    
+def Invoice(request):
+    return render(request,'invoice.html')
+
+def Order_page(request):
+    return render(request,"Myorder.html")
 
 
 

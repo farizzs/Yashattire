@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
 from MainApp.models import CategoryDb,Productdb,CarouserDb
-from FrontendApp.models import ContactDb
+from FrontendApp.models import ContactDb,CheckOut
 from django.core.files.storage import FileSystemStorage
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from . models import PRODUCT_SIZES, Options
+from django.contrib import messages
 
 
 # Create your views here
@@ -20,6 +21,7 @@ def SaveCategory(request):
         description=request.POST.get('description')
         category_data=CategoryDb(c_name=name,c_image=image,Description=description)
         category_data.save()
+        messages.success(request,"category saved succusfully..!")
         return redirect(AddCategory)
     
 def DisplayCategory(request):
@@ -214,3 +216,18 @@ def Delete_customers(request,dataid):
     data = User.objects.filter(id=dataid)
     data.delete()
     return redirect(Display_customers)
+
+def Order_Display(request):
+    data=User.objects.all()
+    order_data=CheckOut.objects.select_related('order', 'order__user')
+    context={
+        'data':data,
+        'order_data':order_data
+    }
+    return render(request,'Order_Show_page.html',context)
+
+
+def delete_order(request,dataid):
+    data=CheckOut.objects.filter(id=dataid)
+    data.delete()
+    return redirect(Order_Display)

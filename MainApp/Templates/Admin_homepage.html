@@ -47,22 +47,24 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="{% url 'homepage' %}" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>YASHATTIRE</h3>
                 </a>
+                {% if request.session.username %}
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="{% static 'img/user.jpg' %}" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle me-lg-2" src="{% static 'frontend/admin.png' %}" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        {% if request.session.username %}
+                       
                         <h6 class="mb-0">{{request.session.username}}</h6>
                     
                         <span>Admin</span>
-                        {% endif %}
+                       
                     </div>
-                </div>
+                </div> 
+                {% endif %}
                 <div class="navbar-nav w-100">
                     <a href="{% url 'homepage' %}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
@@ -112,6 +114,13 @@
                            
                         </div>
                     </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Customer Oders</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                          <!-- <a href="{% url 'Add_Carousel' %}" class="nav-item nav-link ">Add Carousel</a> -->
+                          <a href="{% url 'Order_Display' %}" class="nav-item nav-link ">Show Orders</a>
+                        </div>
+                    </div>
 
                     <div class="nav-item dropdown">
 
@@ -148,8 +157,9 @@
                 <form class="d-none d-md-flex ms-4">
                     <input class="form-control border-0" type="search" placeholder="Search">
                 </form>
+                
                 <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-envelope me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">Message</span>
@@ -211,21 +221,22 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
-                    </div>
+                    </div> -->
+                    {% if request.session.username %}
                     <div class="nav-item dropdown">
+                        
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{% static 'img/user.jpg' %}" alt="" style="width: 40px; height: 40px;">
-                            {% if request.session.username %}
+                            <img class="rounded-circle me-lg-2" src="{% static 'frontend/admin.png' %}" alt="" style="width: 40px; height: 40px;">
+                           
                             <span class="d-none d-lg-inline-flex">{{request.session.username}}</span>
-                            {% endif %}
+                         
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
+                        
                             <a href="{% url 'admin_logout' %}" class="dropdown-item">Log Out</a>
                         </div>
-                    </div>
-                </div>
+                    </div> {% endif %}
+                </div>  
             </nav>
             <!-- Navbar End -->
 
@@ -498,18 +509,17 @@
 
 
             <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
+            <div class="container-fluid pt-4 px-4" style="margin-top: 500px;">
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                            &copy; <a href="{% url 'homepage' %}">YASHATTIRE</a>, All Right Reserved. 
                         </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        <!-- <div class="col-12 col-sm-6 text-center text-sm-end">
                             Designed By <a href="https://htmlcodex.com">HTML Codex</a>
                         </br>
                         Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
