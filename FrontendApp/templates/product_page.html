@@ -186,9 +186,9 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
-            <div class="col-lg-3 col-md-12">
+            <!-- <div class="col-lg-3 col-md-12"> -->
                 <!-- Price Start -->
-                <div class="border-bottom mb-4 pb-4">
+                <!-- <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -222,11 +222,11 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Price End -->
                 
                 <!-- Color Start -->
-                <div class="border-bottom mb-4 pb-4">
+                <!-- <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -260,11 +260,11 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Color End -->
 
                 <!-- Size Start -->
-                <div class="mb-5">
+                <!-- <div class="mb-5">
                     <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -298,16 +298,16 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Size End -->
-            </div>
+            <!-- </div> -->
             <!-- Shop Sidebar End -->
 
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
-                <div class="row pb-3">
-                    <div class="col-12 pb-1">
+                <div class="row pb-3" style="width: 1250px;">
+                    <!-- <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <form action="">
                                 <div class="input-group">
@@ -331,28 +331,37 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                   
                     
                     {% for i in product_data %}
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                       
-                        <div class="card product-item border-0 mb-4">
+                    <form action="{% url 'Save_to_cart' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1" >
+                        <input type="hidden" value="{{i.id}}" name="product">
+                        <div class="card product-item border-0 mb-4" style="width: 350px;" >
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" >
-                                <a href="{% url 'Product_single_page' dataid=i.id %}"><img  class="img-fluid w-100" src="{{i.p_image.url}} "  alt="" style="height: 300px; "  ></a>
+                                <a href="{% url 'Product_single_page' dataid=i.id %}"><img  class="img-fluid " src="{{i.p_image.url}} "  alt="" style="width: 400px; height: 350px;"  ></a>
                             </div>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                 <a href="{% url 'Product_single_page' dataid=i.id %}"><h6 class="text-truncate mb-3">{{i.P_name}}</h6></a>
+                                <input type="hidden" name="hidden" id="price_per_item" value="{{i.Price}}" style="margin-top: 0cm;">
+                                <input type="hidden" value="{{i.P_name}}" name="P_name">
+                                <input type="hidden" style="width: 110px; margin-right: 30px;" name="Qty" id="Qty" min="1" max="5" value="{{i.Quantity}}" >
+                                <input  type="hidden" style="width: 130px; margin-right: 30px; margin-top: -5px;" name="totalprice" id="totalprice" value="{{i.Price}}">
+
+
                                 <div class="d-flex justify-content-center">
                                     <h6>Rs:{{i.Price}}</h6><h6 class="text-muted ml-2"><del></del></h6>
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-between bg-light border">
                                 <a href="{% url 'Product_single_page' dataid=i.id %}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                <a href="{% url 'Product_single_page' dataid=i.id %}"  type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                <button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
                             </div>
                         </div>
                        
-                    </div>
+                    </div></form>
                     {% endfor %}
                   
                  

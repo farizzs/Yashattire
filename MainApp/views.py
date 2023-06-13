@@ -105,6 +105,7 @@ def save_Product(request):
         obj.save()
         for size in sizes:
             Options.objects.create(product=obj, size=size)
+        messages.success(request,"Product saved succusfully..!")
         return redirect(Add_Product)
      
 def Display_product(request):

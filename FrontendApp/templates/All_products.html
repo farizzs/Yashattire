@@ -187,7 +187,7 @@
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-12">
                 <!-- Price Start -->
-                <div class="border-bottom mb-4 pb-4">
+                <!-- <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -221,11 +221,11 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Price End -->
                 
                 <!-- Color Start -->
-                <div class="border-bottom mb-4 pb-4">
+                <!-- <div class="border-bottom mb-4 pb-4">
                     <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -259,11 +259,11 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Color End -->
 
                 <!-- Size Start -->
-                <div class="mb-5">
+                <!-- <div class="mb-5">
                     <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -297,7 +297,7 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Size End -->
             </div>
             <!-- Shop Sidebar End -->
@@ -305,7 +305,7 @@
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-12">
-                <div class="row pb-3">
+                <!-- <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <form action="">
@@ -329,14 +329,14 @@
                                     <a class="dropdown-item" href="#">Best Rating</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     {% for i in product_data %}
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1" >
                        
-                        <div class="card product-item border-0 mb-4">
+                        <div class="card product-item border-0 mb-4" style="width: 350px;">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" >
-                                <a href="{% url 'Product_single_page' dataid=i.id %}"><img  class="img-fluid w-100" src="{{i.p_image.url}} "  alt="" style="height: 300px; "  ></a>
+                                <a href="{% url 'Product_single_page' dataid=i.id %}"><img  class="img-fluid " src="{{i.p_image.url}} "  alt="" style="height: 400px; width: 400px;"  ></a>
                             </div>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                 <a href="{% url 'Product_single_page' dataid=i.id %}"><h6 class="text-truncate mb-3">{{i.P_name}}</h6></a>

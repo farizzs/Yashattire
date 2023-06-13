@@ -7,6 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      $(document).ready(function(){
+        $('#submit').click(function(){
+          Swal.fire(
+            'Succesfully!',
+            'submitted succesfully!',
+            'success'
+            )
+        })
+      })
+    </script>
+
+
 </head>
 <body>
     <div class="col-sm-12 col-xl-6" style="width: 100%; height: 100%;">
@@ -30,7 +45,7 @@
                     <div id="text" class="form-text">
                     </div>
                 
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" id="submit">Save</button>
             </form>
         </div>
     </div>
@@ -45,27 +60,33 @@
               })
         }
     </script> -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    
-    <!-- {% if messages %}
-      {% for i in messages %}
-        {% if i.tags == 'warnign' %}
-      <script>
-        swal('{{i}}','','warnign');
-      </script>
-      {% elif i.tags == 'error' %}
-      <script>
-        swal('{{i}}','','error');
-      </script>
-      {% else %}
-      <script>
-        swal('{{i}}','','success');
-      </script>
-         
-      {% endif %}
-    {% endfor %}
- {% endif %} -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   
+    {% if messages %}
+    {% for message in messages %}
+    
+    {% if message.tags == 'warning' %}
+    <script>
+    swal('{{messages}}','', 'warning');
+    </script>
+     
+    {% elif message.tags == 'error' %}  
+    <script> 
+    swal('{{message}}','','error');
+    </script>
+    
+    {% else%}
+    <script>   
+    swal('{{message}}','', 'success');
+    
+    </script>
+    
+
+    
+{% endif %}
+{% endfor %}
+{% endif %}
 </body>
 </html>
 {% endblock %}

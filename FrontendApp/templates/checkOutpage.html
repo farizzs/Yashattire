@@ -24,6 +24,23 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'frontend/css/style.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      $(document).ready(function(){
+        $('#submit').click(function(){
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+             title: 'Your work has been saved',
+             showConfirmButton: false,
+             timer: 1500
+            })
+         
+            
+        })
+      })
+    </script>
 </head>
 
 <body>
@@ -351,25 +368,25 @@
                         <div class="form-group">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment" id="paypal">
-                                <label class="custom-control-label" for="paypal">Paypal</label>
+                                <label class="custom-control-label" for="paypal">UPI</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                <label class="custom-control-label" for="directcheck">Direct Check</label>
+                                <label class="custom-control-label" for="directcheck">Cash On Delivery</label>
                             </div>
                         </div>
                         <div class="">
                             <div class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-                                <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
+                                <label class="custom-control-label" for="banktransfer">Credit/ Debit / ATM card</label>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <form action="{% url 'Save_checkout'  %}">
-                        <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" >Place Order</button>
+                        <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" id="submit">Place Order</button>
                     </div></form>
                 </div>
            
@@ -478,6 +495,32 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'frontend/js/main.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   
+    {% if messages %}
+    {% for message in messages %}
+    
+    {% if message.tags == 'warning' %}
+    <script>
+    swal('{{messages}}','', 'warning');
+    </script>
+     
+    {% elif message.tags == 'error' %}  
+    <script> 
+    swal('{{message}}','','error');
+    </script>
+    
+    {% else%}
+    <script>   
+    swal('{{message}}','', 'success');
+    
+    </script>
+    
+
+    
+{% endif %}
+{% endfor %}
+{% endif %}
 </body>
 
 </html>

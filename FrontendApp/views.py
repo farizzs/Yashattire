@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.contrib import messages
+
 
 # Create your views here.
 def Home_page(request):
@@ -167,13 +169,16 @@ def Save_checkout(request):
         print(creation_data)
         CheckOut.objects.bulk_create(creation_data)  
         data.delete()
+
+        messages.success(request,"Thankyou For Your Order")
+
         return redirect(Home_page)
     
-def Invoice(request):
-    return render(request,'invoice.html')
+# def Invoice(request):
+#     return render(request,'invoice.html')
 
-def Order_page(request):
-    return render(request,"Myorder.html")
+# def Order_page(request):
+#     return render(request,"Myorder.html")
 
 
 

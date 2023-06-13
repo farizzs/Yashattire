@@ -7,6 +7,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AddProduct</title>
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          $(document).ready(function(){
+            $('#submit').click(function(){
+              Swal.fire(
+                'Succesfully!',
+                'submitted succesfully!',
+                'success'
+                )
+            })
+          })
+        </script>
        
     </head>
     <body>
@@ -82,9 +95,35 @@
                         name="description"></textarea>
 
                 </div><br><br>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" id="submit">Save</button>
 
             </div>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   
+            {% if messages %}
+            {% for message in messages %}
+            
+            {% if message.tags == 'warning' %}
+            <script>
+            swal('{{messages}}','', 'warning');
+            </script>
+             
+            {% elif message.tags == 'error' %}  
+            <script> 
+            swal('{{message}}','','error');
+            </script>
+            
+            {% else%}
+            <script>   
+            swal('{{message}}','', 'success');
+            
+            </script>
+            
+        
+            
+        {% endif %}
+        {% endfor %}
+        {% endif %}
            
         </body>
     </html>
